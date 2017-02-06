@@ -3,10 +3,11 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
-		<title>The hills are alive</title>
+		<title>Leaflet Lab</title>
 
 		<!--put your external stylesheet links here-->
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="lib/leaflet/leaflet.css">
 		<!--[if IE<9]>
 			<link rel="stylesheet" href="css/style.ie.css">
 		<![endif]-->
@@ -14,29 +15,14 @@
 
 	<body>
 		<!--put your initial page content here-->
-		<p>said the hills</p>
 		<!--you can also use this space for internal scripts or stylesheets;
 		place these within <script> or <style> tags-->
-		<style>
-			#first{
-				background-color: blue;
-				width: 80%;
-				margin: 0px;
-				height: 100%;
-			}
-		</style>
 
-		<div id="first">
-			<p>This is my first div text!</p>
-		</div>
+		<div id="mapid"></div>
 
-		<script>
-			var firstDiv = document.getElementById("first");
-			firstDiv.addEventListener("click", function(){
-				alert("you clicked my div!")
-			})
-		</script>
 		<!--put your external script links here-->
+		<script type="text/javascript" src="lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
 </html>

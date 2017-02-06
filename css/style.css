@@ -1,1 +1,8 @@
 /*Stylesheet by Stephen L. Patterson*/
+
+#mydiv{
+    background-color: blue;
+    width: 100%;
+    margin: 0px;
+    height: 100%;
+}
