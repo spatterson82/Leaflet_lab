@@ -1,8 +1,57 @@
 /*Stylesheet by Stephen L. Patterson*/
 
-#mydiv{
-    background-color: blue;
-    width: 100%;
-    margin: 0px;
-    height: 100%;
+#mapid { 
+    float: left;
+    padding-right: -50px;
+    width: 80%;
+    height: 600px;
+    display: inline-block;
+}
+
+.leaflet-popup-content p {
+    margin: 0.2em 0;
+}
+
+#panel {
+    float: right;
+    margin-right: 10px;
+    width: 16%;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.sequence-control-container {
+    width: 350px;
+    height: 30px;
+    background-color: rgba(255,255,255,0.8);
+    padding: 10px;
+    line-height: 45px;
+    text-align: center;
+    border: solid gray 1px;
+}
+
+.legend-control-container {
+    width: 300px;
+    height: 100px;
+    font-size: 20px;
+    background-color: rgba(255,255,255,0.8);
+    padding: 5px;
+    line-height: 45px;
+    text-align: center;
+    border: solid gray 1px;
+}
+
+#temporal-legend {
+    line-height: 30px;
+}
+.range-slider {
+    width: 200px;
+}
+
+#forward {
+    float: right;
+}
+#reverse {
+    float: left;
 }

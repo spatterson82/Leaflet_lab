@@ -1,145 +1,196 @@
-function initialize(){
-    cities();
-};
+var mymap = L.map('mapid').setView([-104.99404, 39.75621], 13);
 
-// Function to make values and create a table
-// function cities(){
-//     // Declare variables
-//     var city_array = [
-//         "DeFuniak Springs",
-//         "Dover",
-//         "Shreveport",
-//         "Lafayette",
-//         "Biloxi",
-//         "Portland"
-//     ];
+// mapbox tiles
+// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+//     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+//     maxZoom: 18,
+//     id: 'mapbox.satellite',
+//     accessToken: 'pk.eyJ1Ijoic3BhdHRlcnNvbjgiLCJhIjoiY2lzZzBnbmlxMDFzNjJzbnZ1cXJ0bDJ5cSJ9.r_0eIQ9LIuNS3LV-GL1AIg'
+// }).addTo(mymap);
 
-//     var rank_array = [
-//         5,
-//         2,
-//         3,
-//         4,
-//         6,
-//         1
-//     ];
+//openstreetmap tiles
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+}).addTo(mymap);
 
-//     // Create table
-//     var table = document.createElement("table");
+// // Markers
+var marker = L.marker([51.5, -0.09]).addTo(mymap);
 
-//     // Create Header
-//     var headerRow = document.createElement("tr");
-    
-//     // Create City Header
-//     var cityHeader = document.createElement("th");
-//     cityHeader.innerHTML = "City";
-//     headerRow.appendChild(cityHeader);
+var layer = L.marker(latlng, {
+    title: feature.properties.gage
+});
 
-//     // Create ranking Header
-//     var rankHeader = document.createElement("th");
-//     rankHeader.innerHTML = "Rank";
-//     headerRow.appendChild(rankHeader);
+var circle = L.circle([51.508, -0.11], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+}).addTo(mymap);
 
-//     table.appendChild(headerRow);
+var polygon = L.polygon([
+    [51.509, -0.08],
+    [51.503, -0.06],
+    [51.51, -0.047]
+]).addTo(mymap);
 
-//     for (var i = 0; i < city_array.length; i++){
-//         // Create a new row each iteration
-//         var tr = document.createElement("tr");
+//Pop-up Layer
+marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup(); //only on marker objects
+circle.bindPopup("I am a circle.");
+polygon.bindPopup("I am a polygon");
 
-//         // Add  data to current row for each list
-//         var city = document.createElement("td");
-//         city.innerHTML = city_array[i];
-//         tr.appendChild(city);
+var popup = L.popup()
+    .setLatLng([51.5, -0.09])
+    .setContent("I am a standalone popup.")
+    .openOn(mymap);
 
-//         var ranking = document.createElement("td");
-//         ranking.innerHTML = rank_array[i];
-//         tr.appendChild(ranking);
+//Events
+var popup = L.popup();
 
-//         // Append the new row to the main table
-//         table.appendChild(tr);
+function onMapClick(e) {
+    popup   
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(mymap);
+}
+
+
+mymap.on('click', onMapClick);
+
+
+
+
+// tutorial code not used
+//function to retrieve the data and place it on the map
+// function getData(map){
+//     //load the data
+//     // $.ajax("data/MegaCities.geojson", {
+//     //     dataType: "json",
+//     //     success: function(response){
+//     //         //create a Leaflet GeoJSON layer and add it to the map
+//     //         L.geoJson(response).addTo(map);
+//     //     }
+//     // });
+//     //Example 2.3 line 22...load the data
+//     $.ajax("data/MegaCities.geojson", {
+//         dataType: "json",
+//         success: function(response){
+//             //create marker options
+//             var geojsonMarkerOptions = {
+//                 radius: 8,
+//                 fillColor: "#ff7800",
+//                 color: "#000",
+//                 weight: 1,
+//                 opacity: 1,
+//                 fillOpacity: 0.8
+//             };
+
+//             //create a Leaflet GeoJSON layer and add it to the map
+//             L.geoJson(response, {
+//                 pointToLayer: function (feature, latlng){
+//                     return L.circleMarker(latlng, geojsonMarkerOptions);
+//                 }
+//             }).addTo(map);
+//         }
+//     });
+// };
+
+// oneachfeature ajax
+// function onEachFeature(feature, layer) {
+//     var popupContent = "";
+//     if (feature.properties) {
+//         for (var property in feature.properties) {
+//             popupContent += "<p>" + property + ": " + feature.properties[property] + "</p>";
+//         }
+//         layer.bindPopup(popupContent);
 //     };
+// };
 
-//     // Overwrite the mydiv element
-//     var mydiv = document.getElementById("mydiv");
-//     mydiv.appendChild(table);
-
+// function getData(map) {
+//     $.ajax("data/MegaCities.geojson", {
+//         dataType : "json",
+//         success : function(response) {
+//             L.geoJson(response, {
+//                 onEachFeature : onEachFeature
+//             }).addTo(map);
+//         }
+//     });
 // };
 
 
-function cities(){
-    var cityPop = [
-        {
-            city: 'DeFuniak Springs',
-            rank: 5
-        },
-        {
-            city: 'Dover',
-            rank: 2
-        },
-        {
-            city: 'Portland',
-            rank: 1
-        },
-        {
-            city: 'Shreveport',
-            rank: 3
-        },
-        {
-            city: 'Lafayette',
-            rank: 4
-        }
-    ];
+// function getData(map) {
+//     // filter Example
+//     $.ajax("data/MegaCities.geojson", {
+//         dataType : "json",
+//         success : function(response) {
+//             var geojsonMarkerOptions = {
+//                 radius: 8,
+//                 fillColor: "#ff7800",
+//                 color: "#000",
+//                 weight: 1,
+//                 opacity: 1,
+//                 fillOpacity: 0.8
+//             };
 
-    $('#mydiv').append('<table>');
+//             L.geoJson(response, {
+//                 pointToLayer: function (feature, latlng){
+//                     return L.circleMarker(latlng, geojsonMarkerOptions);
+//                 },
+//                 filter : function(feature, layer) {
+//                     return feature.properties.Pop_2015 > 20;
+//                 }
 
-    $('table').append('<tr>');
+//             }).addTo(map);
+//         }
+//     });
+// };
 
-    $('tr').append('<th>City</th><th>Rank</th>');
+// clustergroup example
+// function getData(map) {
+//     $.ajax("data/MegaCities.geojson", {
+//         dataType : "json",
+//         success : function(response) {
+//             console.log(response)
 
-    for (var i = 0; i < cityPop.length; i++){
-        var rowHTML = '<tr><td>' + cityPop[i].city + '</td><td>' + cityPop[i].rank + '</td></tr>';
-        $('table').append(rowHTML);
-    };
-};
+//             var markers = L.markerClusterGroup();
 
-$(document).ready(initialize);
+//             for (var i = 0; i < response.features.length; i++) {
+//                 var current_feature = response.features[i];
+//                 //add proprties html string to each marker
+//                 var properties = "";
+//                 for (var property in current_feature.properties) {
+//                     properties += "<p>" + property + ": " + current_feature.properties[property] + "</p>";
+//                 };
+//                 var marker = L.marker(new L.LatLng(current_feature.geometry.coordinates[1], current_feature.geometry.coordinates[0]), {properties : properties});
+//                 // add popup
+//                 marker.bindPopup(properties);
+//                 //add marker to clustergroup
+//                 markers.addLayer(marker);
+//             }
+//             map.addLayer(markers);
+//         }
+//     });
+// };
 
-// window.onload = initialize();
+// function getData(map){
+//     //load the data
+//     $.ajax("data/Mississippi_River_Stages.geojson", {
+//         dataType: "json",
+//         success: function(response){
+//             //create a Leaflet GeoJSON layer
+//             var geoJsonLayer = L.geoJson(response);
+//             //create a L.markerClusterGroup layer
+//             var markers = L.markerClusterGroup();
+//             //add geojson to marker cluster layer
+//             markers.addLayer(geoJsonLayer);
+//             //add marker cluster layer to map
+//             map.addLayer(markers);
+//         }
+//     });
+// };
 
-// on click add a new value to table
-$('#mydiv').on('click', function(){
-    console.log('I clicked on the table');
-});
 
-function clickon(){
-    // var newRow = '<tr><td>Sante Fe</td><td>6</td></tr>'
-    // $('table').append(newRow);
-    console.log('I clicked on the table');
-};
-
-
-// $('table').off('click', clickon);
-
-// // get the div's id value
-// var theid = $('#mydiv').attr('id');
-// // Add the id value to the div as text
-// $('#mydiv').append(theid);
-// // Add a new attribute for a class
-// $('#mydiv').attr('class', 'foo');
-
-// // Change background color of mydiv
-// $('#mydiv').css('color', 'white');
-// // Change the text size and color
-// $('#mydiv').css({
-//     'font-size': '2m',
-//     'text-align': 'left'
-// });
-
-// var textColor = $('#mydiv').css('color');
-// $('#mydiv').append(textColor);
-
-// // loop through each element in script
-// $('script').each(function(){
-//     var source_var = $('this').attr('src');
-//     $('#mydiv').append(source_var);
-// });
-
+//jquery items changes to prototype classes
+    // create range input element - slider
+    // $('#slider').append('<input type="range" class="range-slider">');
+    // $('#slider').append('<button class="skip" id="reverse">Back</button>');
+    // $('#slider').append('<button class="skip" id="forward">Forward</button>');
